@@ -10,11 +10,11 @@ import RPi.GPIO as GPIO
 
 GPIO_PIN = 18  # The GPIO PIN ID
 CPU_TEMP_FAN_ON = 57  # C - The max temp after which will start the fan
-CPU_TEMP_FAN_OFF = 50  # C - Same as above, but will stop the fan
-CHECK_INTERVAL_FAN_ON = 5  # Seconds between the checks when the fan is ON
-CHECK_INTERVAL_FAN_OFF = 15  # Seconds between the checks when the fan is OFF
+CPU_TEMP_FAN_OFF = 47  # C - Same as above, but will stop the fan
+CHECK_INTERVAL_FAN_ON = 10  # Seconds between the checks when the fan is ON
+CHECK_INTERVAL_FAN_OFF = 30  # Seconds between the checks when the fan is OFF
 MAX_FAN_ON_TIME = 1 * 60 * 60  # Seconds - Maximum time when the fan is ON
-MIN_FAN_ON_TIME = 1 * 60  # Seconds - Minimum time when the fan is ON
+MIN_FAN_ON_TIME = 3 * 60  # Seconds - Minimum time when the fan is ON
 
 _FAN_MODE_AUTO = 'auto'
 _FAN_MODE_ON = 'on'
