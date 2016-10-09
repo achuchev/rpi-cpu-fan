@@ -1,0 +1,54 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          fan
+# Required-Start:    $syslog
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Control the Fan
+# Version:           0.1
+### END INIT INFO
+
+fan_service_name='run_fan.py'
+fan_service_running=`ps ax | grep "$fan_service_name" | awk '{ print $1 }' | wc -l`
+
+case "$1" in
+    start)
+	if [ "$fan_service_running" -gt 1 ]; then
+		echo "Fan service already running..."
+		exit 0
+	fi
+	echo -n "Starting Fan service: "
+	python /opt/run_fan/run_fan.py & >/dev/null 2>&1
+	sleep 1
+	echo "done"
+	;;
+    stop)
+	if [ "$fan_service_running" -eq 1 ]; then
+		echo "Fan service is not running (no process found)..."
+		exit 0
+	fi
+	echo -n "Killing Fan service: "
+	# Trying to kill the Fan service
+	ps ax | grep "$fan_service_name" | awk '{ print $1 }' | xargs kill -9 >/dev/null 2>&1
+	sleep 1
+	echo "done"
+	;;
+    restart)
+	sh $0 stop
+	sh $0 start
+	;;
+    status)
+        if [ "$fan_service_running" -gt 1 ]; then
+                echo "Fan service running."
+	else
+		echo "It seems that the Fan service isn't running (no process found)."
+        fi
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|status}"
+	exit 1
+	;;
+esac
+
+exit 0
